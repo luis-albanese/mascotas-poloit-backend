@@ -21,7 +21,7 @@ server.use(
     methods: "GET, POST, PUT, DELETE",
   })
 );
-// Indicamos '/api' como ruta para app
+// Indicamos '/api' como ruta principal
 server.use("/api", app);
 // Utilizamos nuestro manejador de errores
 server.use(errorHandler);
