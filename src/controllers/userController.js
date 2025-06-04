@@ -4,7 +4,7 @@ import { createUserSchema } from "../schemas/userSchema.js";
 
 export const userController = () => {
   // Extraemos funciones del Service
-  const { create, findUser } = userService();
+  const { create, findUser, allUsers } = userService();
   // Controlador para crear nuevo usuario
   const newUser = async (req, res, next) => {
     // Extraemos body
@@ -38,5 +38,16 @@ export const userController = () => {
       next(error);
     }
   };
-  return { newUser };
+  // Controlador para obtener todos los usuarios
+  const getUsers = async (req, res, next) => {
+    try {
+      const allUsers = await allUsers();
+      res
+        .status(HTTP_STATUS.OK)
+        .json({ message: "Users retrieved successfully", allUsers });
+    } catch (error) {
+      next(error);
+    }
+  };
+  return { newUser, getUsers };
 };
