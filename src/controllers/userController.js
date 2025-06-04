@@ -27,6 +27,7 @@ export const userController = () => {
         .status(HTTP_STATUS.BAD_REQUEST)
         .json({ error: "User already exists" });
     }
+
     try {
       // Creamos nuevo usuario
       const user = await create(body);
