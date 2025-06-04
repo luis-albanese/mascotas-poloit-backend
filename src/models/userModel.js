@@ -22,6 +22,8 @@ export const userModel = () => {
     } catch (error) {
       // Error por si falla
       throw new Error(error);
+    } finally {
+      prisma.$disconnect();
     }
   };
   return {
