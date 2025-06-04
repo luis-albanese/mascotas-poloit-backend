@@ -10,9 +10,14 @@ export const userModel = () => {
     const hash = await encrypt(password);
     // Guardamos en data la contraseña encriptada
     data.password = hash;
-    return await prisma.user.create({
-      data,
-    });
+    try {
+      const user = await prisma.user.create({
+        data,
+      });
+      return user;
+    } catch (error) {
+      throw new Error(error);
+    }
   };
   return {
     createUser,
