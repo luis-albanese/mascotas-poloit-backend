@@ -39,12 +39,12 @@ export const userController = () => {
     }
   };
   // Controlador para obtener todos los usuarios
-  const getUsers = async (req, res, next) => {
+  const getUsers = async (_req, res, next) => {
     try {
-      const allUsers = await allUsers();
+      const users = await allUsers();
       res
         .status(HTTP_STATUS.OK)
-        .json({ message: "Users retrieved successfully", allUsers });
+        .json({ message: "Users retrieved successfully", users });
     } catch (error) {
       next(error);
     }
