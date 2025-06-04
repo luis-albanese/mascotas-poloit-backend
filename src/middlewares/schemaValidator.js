@@ -1,4 +1,4 @@
-import HTTP_STATUS from "../helpers/httpStatus.js";
+import HTTP_STATUS from "../utils/httpStatus.js";
 
 // Función para validar schema de datos ingresados por el usuario
 export const schemaValidator = (schema) => {
