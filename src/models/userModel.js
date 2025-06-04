@@ -29,14 +29,20 @@ export const userModel = () => {
   // Model para encontrar usuario
   const findUserByMail = async (email) => {
     // Consulta a la base de datos para encontrar un usuario
-    const user = await prisma.user.findUnique({
-      // Enviamos la data recibida para solicitar la creación
-      where: {
-        email: email,
-      },
-    });
-    // Devolvemos los datos del usuario
-    return user;
+    try {
+      const user = await prisma.user.findUnique({
+        // Enviamos la data recibida para solicitar la creación
+        where: {
+          email: email,
+        },
+      });
+      // Devolvemos los datos del usuario
+      return user;
+    } catch (error) {
+      throw new Error(error);
+    } finally {
+      prisma.$disconnect();
+    }
   };
   return {
     createUser,
