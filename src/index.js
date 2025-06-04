@@ -22,7 +22,7 @@ server.use(
   })
 );
 // Indicamos '/api' como ruta principal
-server.use("/api", app);
+server.use("/", app);
 // Utilizamos nuestro manejador de errores
 server.use(errorHandler);
 // Servidor ON

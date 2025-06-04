@@ -12,12 +12,12 @@ app.get("/", (_req, res) => {
     app: "API-Adopción-Mascotas",
     routes: {
       index: "/",
-      Users: "/users",
-      Pets: "/pets",
+      Users: "/api/users",
+      Pets: "/api/pets",
     },
   };
   res.status(HTTP_STATUS.OK).json(responseServer);
 });
-app.use("/users", userRoutes());
+app.use("/api/users", userRoutes());
 
 export default app;
