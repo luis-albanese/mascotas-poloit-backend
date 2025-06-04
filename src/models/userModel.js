@@ -44,8 +44,22 @@ export const userModel = () => {
       prisma.$disconnect();
     }
   };
+  // Model para retornar todos los usuarios
+  const findAllUsers = async () => {
+    // Consulta a la base de datos para encontrar un usuario
+    try {
+      const users = await prisma.user.findMany();
+      // Devolvemos los datos del usuario
+      return users;
+    } catch (error) {
+      throw new Error(error);
+    } finally {
+      prisma.$disconnect();
+    }
+  };
   return {
     createUser,
     findUserByMail,
+    findAllUsers,
   };
 };

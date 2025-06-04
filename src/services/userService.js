@@ -17,8 +17,16 @@ export const userService = () => {
     // Devolvemos el usuario
     return user;
   };
+  // Model para retornar todos los usuarios
+  const findAllUsers = async () => {
+    // Consulta a la base de datos para encontrar un usuario
+    const users = await prisma.user.findMany();
+    // Devolvemos los datos del usuario
+    return users;
+  };
   return {
     create,
     findUser,
+    findAllUsers,
   };
 };
