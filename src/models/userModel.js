@@ -1,4 +1,4 @@
-import prisma from "../config/prisma.js";
+import { prisma } from "../config/prisma.js";
 import { encrypt } from "../utils/bcrypt.js";
 
 export const userModel = () => {

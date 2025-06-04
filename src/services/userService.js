@@ -11,8 +11,7 @@ export const userService = () => {
     return user;
   };
   // Servicio para encontrar usuario por email
-  const findUser = async (data) => {
-    const email = data.email;
+  const findUser = async (email) => {
     // Utilizamos el model
     const user = await findUserByMail(email);
     // Devolvemos el usuario

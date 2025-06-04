@@ -1,5 +1,6 @@
 import express from "express";
 import HTTP_STATUS from "./utils/httpStatus.js";
+import { userRoutes } from "./routes/userRoute.js";
 
 const app = express();
 
@@ -10,12 +11,13 @@ app.get("/", (_req, res) => {
     status: 200,
     app: "API-Adopción-Mascotas",
     routes: {
-      index: "/api",
+      index: "/",
       Users: "/users",
       Pets: "/pets",
     },
   };
   res.status(HTTP_STATUS.OK).json(responseServer);
 });
+app.use("/users", userRoutes());
 
 export default app;

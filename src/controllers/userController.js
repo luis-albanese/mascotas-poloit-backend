@@ -1,6 +1,6 @@
 import HTTP_STATUS from "../utils/httpStatus.js";
 import { userService } from "../services/userService.js";
-import createUserSchema from "../schemas/createUserSchema.js";
+import { createUserSchema } from "../schemas/userSchema.js";
 
 export const userController = () => {
   // Extraemos funciones del Service
