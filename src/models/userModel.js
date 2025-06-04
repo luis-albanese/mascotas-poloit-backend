@@ -1,5 +1,5 @@
-import prisma from "../config/prisma";
-import { encrypt } from "../utils/bcrypt";
+import prisma from "../config/prisma.js";
+import { encrypt } from "../utils/bcrypt.js";
 
 export const userModel = () => {
   // Model para crear usuario
@@ -10,12 +10,17 @@ export const userModel = () => {
     const hash = await encrypt(password);
     // Guardamos en data la contraseña encriptada
     data.password = hash;
+    // Consulta a la base de datos para crear un usuario
     try {
+      // Función create de prisma para crear user
       const user = await prisma.user.create({
+        // Enviamos la data recibida para solicitar la creación
         data,
       });
+      // Devolvemos los datos del usuario
       return user;
     } catch (error) {
+      // Error por si falla
       throw new Error(error);
     }
   };
