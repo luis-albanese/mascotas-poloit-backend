@@ -3,7 +3,7 @@ import { petService } from "../services/petService";
 import { createPetSchema } from "../schemas/petSchema";
 
 export const petController = () => {
-  const { create } = petService();
+  const { create, getPets } = petService();
 
   const newPet = async (req, res, next) => {
     const data = req.body;
@@ -24,5 +24,15 @@ export const petController = () => {
       next(error);
     }
   };
-  return { newPet };
+  const getAllPets = async (req, res, next) => {
+    try {
+      const pets = await getPets();
+      return res
+        .status(HTTP_STATUS.OK)
+        .json({ message: "Pets retrieved successfully", pets });
+    } catch (error) {
+      next(error);
+    }
+  };
+  return { newPet, getAllPets };
 };
