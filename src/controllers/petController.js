@@ -1,6 +1,6 @@
-import HTTP_STATUS from "../utils/httpStatus";
-import { petService } from "../services/petService";
-import { createPetSchema } from "../schemas/petSchema";
+import HTTP_STATUS from "../utils/httpStatus.js";
+import { petService } from "../services/petService.js";
+import { createPetSchema } from "../schemas/petSchema.js";
 
 export const petController = () => {
   const { create, getPets } = petService();

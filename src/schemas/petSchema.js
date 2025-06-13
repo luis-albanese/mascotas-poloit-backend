@@ -5,8 +5,8 @@ export const createPetSchema = Joi.object({
   race: Joi.string().required(),
   color: Joi.string().required(),
   age: Joi.number().required(),
-  size: Joi.string().validate("SMALL", "MEDIUM", "BIG").required(),
+  size: Joi.string().valid("SMALL", "MEDIUM", "BIG").required(), // Cambia validate por valid
   image: Joi.string().required(),
   userId: Joi.number().required(),
-  status: Joi.string().validate("ACTIVE", "INACTIVE"),
+  status: Joi.string().valid("ACTIVE", "INACTIVE").default("ACTIVE") // Añade default
 });
