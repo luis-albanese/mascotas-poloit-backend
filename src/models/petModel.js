@@ -1,15 +1,8 @@
 import { prisma } from "../config/prisma.js";
-import { encrypt } from "../utils/bcrypt.js";
 
 export const petModel = () => {
   // Model para crear mascota
   const createPet = async (data) => {
-    // Extraemos la contraseña
-    const password = data.password;
-    // Encriptamos la contraseña
-    const hash = await encrypt(password);
-    // Guardamos en data la contraseña encriptada
-    data.password = hash;
     // Consulta a la base de datos para crear un usuario
     try {
       // Función create de prisma para crear una mascota
@@ -26,7 +19,18 @@ export const petModel = () => {
       prisma.$disconnect();
     }
   };
+  const getAllPets = async () => {
+    try {
+      const pets = await prisma.pet.findMany();
+      return pets;
+    } catch (error) {
+      throw new Error(error);
+    } finally {
+      prisma.$disconnect();
+    }
+  };
   return {
     createPet,
+    getAllPets,
   };
 };
