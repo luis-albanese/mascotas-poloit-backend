@@ -1,6 +1,7 @@
 import express from "express";
 import HTTP_STATUS from "./utils/httpStatus.js";
 import { userRoutes } from "./routes/userRoute.js";
+import { petRoutes } from "./routes/petRoute.js";
 
 const app = express();
 
@@ -19,5 +20,6 @@ app.get("/", (_req, res) => {
   res.status(HTTP_STATUS.OK).json(responseServer);
 });
 app.use("/api/users", userRoutes());
+app.use("/api/pets", petRoutes());
 
 export default app;
