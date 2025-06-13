@@ -9,7 +9,6 @@ export const userController = () => {
   const newUser = async (req, res, next) => {
     // Extraemos body
     const data = req.body;
-    console.log(data);
     // Validamos los datos
     const { error: validationError } = createUserSchema.validate(data);
     // Si existe error, enviamos respuesta al usuario
@@ -19,15 +18,15 @@ export const userController = () => {
         .json({ error: validationError.details[0].message });
     }
     // // Extraemos el email del body
-    // const { email } = body;
+    const { email } = body;
 
-    // // Verificamos si existe el usuario
-    // const existingUser = await findUser(email);
-    // if (existingUser) {
-    //   return res
-    //     .status(HTTP_STATUS.BAD_REQUEST)
-    //     .json({ error: "User already exists" });
-    // }
+    // Verificamos si existe el usuario
+    const existingUser = await findUser(email);
+    if (existingUser) {
+      return res
+        .status(HTTP_STATUS.BAD_REQUEST)
+        .json({ error: "User already exists" });
+    }
 
     try {
       // Creamos nuevo usuario
