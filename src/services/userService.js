@@ -6,9 +6,13 @@ export const userService = () => {
   // Servicio para crear usuario
   const create = async (data) => {
     // Utilizamos el model
-    const user = await createUser(data);
-    // Devolvemos el usuario
-    return user;
+    try {
+      const user = await createUser(data);
+      // Devolvemos el usuario
+      return user;
+    } catch (error) {
+      return error;
+    }
   };
   // Servicio para encontrar usuario por email
   const findUser = async (email) => {
