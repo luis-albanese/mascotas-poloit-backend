@@ -7,6 +7,8 @@ export const userRoutes = () => {
   // Extraemos funciones del Controller
   const { newUser, getUsers } = userController();
   // Ruta para crear usuario
-  userRoute.route("/create").get(getUsers).post(newUser);
+  userRoute.route("/create").post(newUser);
+  // Ruta para obtener usuarios
+  userRoute.route("/").get(getUsers);
   return userRoute;
 };
