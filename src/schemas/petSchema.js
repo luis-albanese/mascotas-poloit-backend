@@ -10,3 +10,13 @@ export const createPetSchema = Joi.object({
   userId: Joi.number().required(),
   status: Joi.string().valid("ACTIVE", "INACTIVE").default("ACTIVE"),
 });
+
+export const updatePetSchema = Joi.object({
+  name: Joi.string(),
+  race: Joi.string(),
+  color: Joi.string(),
+  age: Joi.number(),
+  size: Joi.string().valid("SMALL", "MEDIUM", "BIG"),
+  image: Joi.string(),
+  status: Joi.string().valid("ACTIVE", "INACTIVE"),
+});
