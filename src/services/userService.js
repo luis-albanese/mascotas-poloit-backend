@@ -1,5 +1,7 @@
 import { userModel } from "../models/userModel.js";
 import { verified } from "../utils/bcrypt.js";
+import { verifyToken } from "../utils/jwtUtils.js";
+import { generateAccessToken } from "../utils/tokenManagment.js";
 
 export const userService = () => {
   // Extraemos las funciones de userModel
@@ -38,7 +40,7 @@ export const userService = () => {
       throw new Error(error);
     }
   };
-
+  // Servicio para iniciar sesión
   const login = async (email, password) => {
     const user = await findUser(email);
     if (!user) {
@@ -53,6 +55,7 @@ export const userService = () => {
     const refreshToken = generateRefreshToken(user);
     return { accessToken, refreshToken, user };
   };
+  // Servicio para refrescar token
   const refreshTokenUser = async (refreshToken) => {
     const decoded = verifyToken(refreshToken, "refresh");
     if (!decoded) {

@@ -12,7 +12,8 @@ import {
 
 export const userController = () => {
   // Extraemos funciones del Service
-  const { create, findUser, allUsers, update, login } = userService();
+  const { create, findUser, allUsers, update, login, refreshTokenUser } =
+    userService();
   // Controlador para crear nuevo usuario
   const newUser = async (req, res, next) => {
     // Extraemos body
@@ -106,6 +107,25 @@ export const userController = () => {
       next(error);
     }
   };
+  // Controlador para refrescar token
+  const refreshToken = async (req, res, next) => {
+    const token = req.headers.authorization?.split(" ")[1];
 
-  return { newUser, getUsers, updateDataUser, loginUser };
+    if (!token) {
+      return res
+        .status(HTTP_STATUS.BAD_REQUEST)
+        .json({ error: "Refresh token is required" });
+    }
+
+    try {
+      const accessToken = await refreshTokenUser(token);
+      res.json({
+        accessToken,
+        message: "Access token refreshed successfully",
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+  return { newUser, getUsers, updateDataUser, loginUser, refreshToken };
 };
