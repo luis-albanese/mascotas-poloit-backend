@@ -2,7 +2,7 @@ import { userModel } from "../models/userModel.js";
 
 export const userService = () => {
   // Extraemos las funciones de userModel
-  const { createUser, findUserByMail, findAllUsers } = userModel();
+  const { createUser, findUserByMail, findAllUsers, updateUser } = userModel();
   // Servicio para crear usuario
   const create = async (data) => {
     // Utilizamos el model
@@ -28,10 +28,18 @@ export const userService = () => {
     // Devolvemos el usuario
     return users;
   };
-
+  const update = async (id, data) => {
+    try {
+      const user = await updateUser(id, data);
+      return user;
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
   return {
     create,
     findUser,
     allUsers,
+    update,
   };
 };
