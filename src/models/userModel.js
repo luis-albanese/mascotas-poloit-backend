@@ -57,9 +57,26 @@ export const userModel = () => {
       prisma.$disconnect();
     }
   };
+  const updateUser = async (id, data) => {
+    try {
+      const idUser = parseInt(id);
+      const user = await prisma.user.update({
+        where: {
+          id: idUser,
+        },
+        data,
+      });
+      return user;
+    } catch (error) {
+      throw new Error(error);
+    } finally {
+      prisma.$disconnect();
+    }
+  };
   return {
     createUser,
     findUserByMail,
     findAllUsers,
+    updateUser,
   };
 };
