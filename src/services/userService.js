@@ -28,6 +28,7 @@ export const userService = () => {
     // Devolvemos el usuario
     return users;
   };
+  // Servicio para actualizar usuario
   const update = async (id, data) => {
     try {
       const user = await updateUser(id, data);

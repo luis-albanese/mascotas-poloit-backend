@@ -1,10 +1,10 @@
 import HTTP_STATUS from "../utils/httpStatus.js";
 import { userService } from "../services/userService.js";
-import { createUserSchema } from "../schemas/userSchema.js";
+import { createUserSchema, updateUserSchema } from "../schemas/userSchema.js";
 
 export const userController = () => {
   // Extraemos funciones del Service
-  const { create, findUser, allUsers } = userService();
+  const { create, findUser, allUsers, update } = userService();
   // Controlador para crear nuevo usuario
   const newUser = async (req, res, next) => {
     // Extraemos body
@@ -49,5 +49,33 @@ export const userController = () => {
       next(error);
     }
   };
-  return { newUser, getUsers };
+  // Controlador para actualizar usuario
+  const updateUser = async (req, res, next) => {
+    const data = req.body;
+    const id = req.params.id;
+    const { error: validationError } = updateUserSchema.validate(data);
+    // Si existe error, enviamos respuesta al usuario
+    if (validationError) {
+      return res
+        .status(HTTP_STATUS.BAD_REQUEST)
+        .json({ error: validationError.details[0].message });
+    }
+    // Verificamos si existe el usuario
+    const existingUser = await findUser(id);
+    if (!existingUser) {
+      return res
+        .status(HTTP_STATUS.NOT_FOUND)
+        .json({ error: "User not found" });
+    }
+    try {
+      const user = await update(id, data);
+      res
+        .status(HTTP_STATUS.OK)
+        .json({ message: "User updated successfully", user });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  return { newUser, getUsers, updateUser };
 };
