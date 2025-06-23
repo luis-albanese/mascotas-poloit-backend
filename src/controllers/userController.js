@@ -1,6 +1,14 @@
 import HTTP_STATUS from "../utils/httpStatus.js";
 import { userService } from "../services/userService.js";
-import { createUserSchema, updateUserSchema } from "../schemas/userSchema.js";
+import {
+  createUserSchema,
+  updateUserSchema,
+  loginSchema,
+} from "../schemas/userSchema.js";
+import {
+  generateAccessToken,
+  generateRefreshToken,
+} from "../utils/tokenManagment.js";
 
 export const userController = () => {
   // Extraemos funciones del Service
@@ -87,14 +95,17 @@ export const userController = () => {
         .json({ error: validationError.details[0].message });
     }
     try {
-      const user = await login(email, password);
-      res
-        .status(HTTP_STATUS.OK)
-        .json({ message: "User logged in successfully", user });
+      const { user, accessToken, refreshToken } = await login(email, password);
+      res.status(HTTP_STATUS.OK).json({
+        message: "User logged in successfully",
+        user,
+        accessToken,
+        refreshToken,
+      });
     } catch (error) {
       next(error);
     }
   };
 
-  return { newUser, getUsers, updateDataUser };
+  return { newUser, getUsers, updateDataUser, loginUser };
 };

@@ -48,7 +48,23 @@ export const userService = () => {
     if (!isPasswordValid) {
       throw new Error("Invalid password");
     }
-    return user;
+
+    const accessToken = generateAccessToken(user);
+    const refreshToken = generateRefreshToken(user);
+    return { accessToken, refreshToken, user };
+  };
+  const refreshTokenUser = async (refreshToken) => {
+    const decoded = verifyToken(refreshToken, "refresh");
+    if (!decoded) {
+      throw new Error("Invalid refresh token");
+    }
+    const user = await findUser(decoded.email);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const accessToken = generateAccessToken(user);
+
+    return accessToken;
   };
   return {
     create,
@@ -56,5 +72,6 @@ export const userService = () => {
     allUsers,
     update,
     login,
+    refreshTokenUser,
   };
 };
