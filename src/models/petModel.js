@@ -29,8 +29,53 @@ export const petModel = () => {
       prisma.$disconnect();
     }
   };
+  const petByID = async (id) => {
+    try {
+      const pet = await prisma.pet.findUnique({
+        where: { id: parseInt(id) },
+      });
+      return pet;
+    } catch (error) {
+      throw new Error(error);
+    } finally {
+      prisma.$disconnect();
+    }
+  };
+  const updatePet = async (id, data) => {
+    const idNumber = parseInt(id);
+    try {
+      const petFound = await prisma.pet.findUnique({
+        where: { id: idNumber },
+      });
+      const petUpdate = { ...petFound, ...data };
+      const pet = await prisma.pet.update({
+        where: { id: idNumber },
+        data: petUpdate,
+      });
+      return pet;
+    } catch (error) {
+      throw new Error(error);
+    } finally {
+      prisma.$disconnect();
+    }
+  };
+  const deletePet = async (id) => {
+    try {
+      const pet = await prisma.pet.delete({
+        where: { id: parseInt(id) },
+      });
+      return pet;
+    } catch (error) {
+      throw new Error(error);
+    } finally {
+      prisma.$disconnect();
+    }
+  };
   return {
     createPet,
     getAllPets,
+    petByID,
+    updatePet,
+    deletePet,
   };
 };

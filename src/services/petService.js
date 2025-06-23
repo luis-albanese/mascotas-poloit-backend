@@ -1,13 +1,13 @@
-import { petModel } from "../models/petModel.js"; // Añade .js
+import { petModel } from "../models/petModel.js";
 
 export const petService = () => {
-  const { createPet, getAllPets } = petModel();
-  
+  const { createPet, getAllPets, petByID, updatePet, deletePet } = petModel();
+
   const create = async (data) => {
     try {
       return await createPet({
         ...data,
-        status: data.status || "ACTIVE" // Asegura valor por defecto
+        status: data.status || "ACTIVE", // Asegura valor por defecto
       });
     } catch (error) {
       throw error;
@@ -22,5 +22,29 @@ export const petService = () => {
     }
   };
 
-  return { create, getPets }; // Añade getPets al return
+  const getPetByID = async (id) => {
+    try {
+      return await petByID(id);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const updateDataPet = async (id, data) => {
+    try {
+      return await updatePet(id, data);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const deleteDataPet = async (id) => {
+    try {
+      return await deletePet(id);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  return { create, getPets, getPetByID, updateDataPet, deleteDataPet };
 };
