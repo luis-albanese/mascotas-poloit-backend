@@ -1,4 +1,5 @@
 import { userModel } from "../models/userModel.js";
+import { verified } from "../utils/bcrypt.js";
 
 export const userService = () => {
   // Extraemos las funciones de userModel
@@ -37,10 +38,23 @@ export const userService = () => {
       throw new Error(error);
     }
   };
+
+  const login = async (email, password) => {
+    const user = await findUser(email);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const isPasswordValid = await verified(password, user.password);
+    if (!isPasswordValid) {
+      throw new Error("Invalid password");
+    }
+    return user;
+  };
   return {
     create,
     findUser,
     allUsers,
     update,
+    login,
   };
 };

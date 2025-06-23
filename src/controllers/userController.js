@@ -4,7 +4,7 @@ import { createUserSchema, updateUserSchema } from "../schemas/userSchema.js";
 
 export const userController = () => {
   // Extraemos funciones del Service
-  const { create, findUser, allUsers, update } = userService();
+  const { create, findUser, allUsers, update, login } = userService();
   // Controlador para crear nuevo usuario
   const newUser = async (req, res, next) => {
     // Extraemos body
@@ -72,6 +72,25 @@ export const userController = () => {
       res
         .status(HTTP_STATUS.OK)
         .json({ message: "User updated successfully", user });
+    } catch (error) {
+      next(error);
+    }
+  };
+  // Controlador para iniciar sesión
+  const loginUser = async (req, res, next) => {
+    const { email, password } = req.body;
+    const { error: validationError } = loginSchema.validate(data);
+    // Si existe error, enviamos respuesta al usuario
+    if (validationError) {
+      return res
+        .status(HTTP_STATUS.BAD_REQUEST)
+        .json({ error: validationError.details[0].message });
+    }
+    try {
+      const user = await login(email, password);
+      res
+        .status(HTTP_STATUS.OK)
+        .json({ message: "User logged in successfully", user });
     } catch (error) {
       next(error);
     }

@@ -21,3 +21,8 @@ export const updateUserSchema = Joi.object({
   rol: Joi.string().valid("ADMIN", "USER").optional().default("USER"),
   status: Joi.string().valid("ACTIVE", "INACTIVE").optional().default("ACTIVE"),
 });
+
+export const loginSchema = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().min(8).required(),
+});
