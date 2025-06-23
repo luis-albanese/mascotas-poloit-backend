@@ -50,7 +50,7 @@ export const userController = () => {
     }
   };
   // Controlador para actualizar usuario
-  const updateUser = async (req, res, next) => {
+  const updateDataUser = async (req, res, next) => {
     const data = req.body;
     const id = req.params.id;
     const { error: validationError } = updateUserSchema.validate(data);
@@ -77,5 +77,5 @@ export const userController = () => {
     }
   };
 
-  return { newUser, getUsers, updateUser };
+  return { newUser, getUsers, updateDataUser };
 };
