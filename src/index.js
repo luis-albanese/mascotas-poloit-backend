@@ -1,6 +1,6 @@
 // dotenv como dependencia para manejar valiables de entorno
 import dotenv from "dotenv";
-// express como dependencia para levantar servidor
+// express como dependencia para levantar servidor.
 import express from "express";
 // cors para configurar ENDPOINTS disponibles para utilizar en nuestra API
 import cors from "cors";
