@@ -5,9 +5,9 @@ import express from "express";
 // cors para configurar ENDPOINTS disponibles para utilizar en nuestra API
 import cors from "cors";
 // app contiene rutas de la API a crear
-import app from "./app.js";
+import app from "./src/app.js";
 // Manejador de errores
-import errorHandler from "./middlewares/errorHandler.js";
+import errorHandler from "./src/middlewares/errorHandler.js";
 // Iniciamos dotenv
 dotenv.config();
 // Instanciamos con process.env.SERVER_PORT a la variable de entorno

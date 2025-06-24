@@ -88,6 +88,8 @@ export const userController = () => {
   // Controlador para iniciar sesión
   const loginUser = async (req, res, next) => {
     const { email, password } = req.body;
+    const data = { email, password };
+    // Validamos los datos
     const { error: validationError } = loginSchema.validate(data);
     // Si existe error, enviamos respuesta al usuario
     if (validationError) {
@@ -96,10 +98,9 @@ export const userController = () => {
         .json({ error: validationError.details[0].message });
     }
     try {
-      const { user, accessToken, refreshToken } = await login(email, password);
+      const { accessToken, refreshToken } = await login(email, password);
       res.status(HTTP_STATUS.OK).json({
         message: "User logged in successfully",
-        user,
         accessToken,
         refreshToken,
       });
