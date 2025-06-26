@@ -27,7 +27,7 @@ export const userController = () => {
         .json({ error: validationError.details[0].message });
     }
     // // Extraemos el email del body
-    const { email } = body;
+    const { email } = data;
 
     // Verificamos si existe el usuario
     const existingUser = await findUser(email);
