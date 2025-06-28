@@ -19,6 +19,7 @@ export const petModel = () => {
       prisma.$disconnect();
     }
   };
+
   const getAllPets = async () => {
     try {
       const pets = await prisma.pet.findMany();
@@ -29,6 +30,7 @@ export const petModel = () => {
       prisma.$disconnect();
     }
   };
+
   const petByID = async (id) => {
     try {
       const pet = await prisma.pet.findUnique({
@@ -41,6 +43,7 @@ export const petModel = () => {
       prisma.$disconnect();
     }
   };
+
   const updatePet = async (id, data) => {
     const idNumber = parseInt(id);
     try {
@@ -59,6 +62,7 @@ export const petModel = () => {
       prisma.$disconnect();
     }
   };
+
   const deletePet = async (id) => {
     try {
       const pet = await prisma.pet.delete({
@@ -71,11 +75,27 @@ export const petModel = () => {
       prisma.$disconnect();
     }
   };
+
+  const findAvailable = async (filter = {}) => {
+    try {
+      const whereClause = {
+        isActive: true
+      };
+      return whereClause;
+    }catch (error) {
+      throw new Error(error);
+    } finally {
+      prisma.$disconnect();
+    }
+  };
+
   return {
     createPet,
     getAllPets,
     petByID,
     updatePet,
     deletePet,
+    findAvailable,
+
   };
 };
