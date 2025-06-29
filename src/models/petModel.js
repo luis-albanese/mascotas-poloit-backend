@@ -76,26 +76,11 @@ export const petModel = () => {
     }
   };
 
-  const findAvailable = async (filter = {}) => {
-    try {
-      const whereClause = {
-        isActive: true
-      };
-      return whereClause;
-    }catch (error) {
-      throw new Error(error);
-    } finally {
-      prisma.$disconnect();
-    }
-  };
-
   return {
     createPet,
     getAllPets,
     petByID,
     updatePet,
     deletePet,
-    findAvailable,
-
   };
 };
