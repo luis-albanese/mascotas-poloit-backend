@@ -64,6 +64,27 @@ export const petModel = () => {
       throw new Error(error.message);
     }
   };
+  const adoptPet = async (id, userId) => {
+    const idNumber = parseInt(id);
+    const userIdNumber = parseInt(userId);
+    try {
+      const pet = await prisma.pet.update({
+        where: { id: idNumber },
+        data: {
+          status: false,
+          userId: userIdNumber,
+        },
+        include: {
+          user: true,
+        },
+      });
+      return pet;
+    } catch (error) {
+      throw new Error(error.message);
+    } finally {
+      prisma.$disconnect();
+    }
+  };
 
   return {
     createPet,
@@ -71,5 +92,6 @@ export const petModel = () => {
     petByID,
     updatePet,
     deletePet,
+    adoptPet,
   };
 };

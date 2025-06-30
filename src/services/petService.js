@@ -1,13 +1,14 @@
 import { petModel } from "../models/petModel.js";
 
 export const petService = () => {
-  const { createPet, getAllPets, petByID, updatePet, deletePet } = petModel();
+  const { createPet, getAllPets, petByID, updatePet, deletePet, adoptPet } =
+    petModel();
 
   const create = async (data) => {
     try {
       return await createPet({
         ...data,
-        status: data.status || "ACTIVE", // Asegura valor por defecto
+        status: data.status || "ACTIVE",
       });
     } catch (error) {
       throw error;
@@ -45,6 +46,20 @@ export const petService = () => {
       throw error;
     }
   };
+  const assingUserToPet = async (id, userId) => {
+    try {
+      return await adoptPet(id, userId);
+    } catch (error) {
+      throw error;
+    }
+  };
 
-  return { create, getPets, getPetByID, updateDataPet, deleteDataPet };
+  return {
+    create,
+    getPets,
+    getPetByID,
+    updateDataPet,
+    deleteDataPet,
+    assingUserToPet,
+  };
 };

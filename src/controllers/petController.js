@@ -3,8 +3,14 @@ import { petService } from "../services/petService.js";
 import { createPetSchema, updatePetSchema } from "../schemas/petSchema.js";
 
 export const petController = () => {
-  const { create, getPets, updateDataPet, deleteDataPet, getPetByID } =
-    petService();
+  const {
+    create,
+    getPets,
+    updateDataPet,
+    deleteDataPet,
+    getPetByID,
+    assingUserToPet,
+  } = petService();
 
   const newPet = async (req, res, next) => {
     const data = req.body;
@@ -77,5 +83,17 @@ export const petController = () => {
       next(error);
     }
   };
-  return { newPet, getAllPets, petByID, updatePet, deletePet };
+  const adoptPet = async (req, res, next) => {
+    const { id } = req.params;
+    const { userId } = req.body;
+    try {
+      const pet = await assingUserToPet(id, userId);
+      return res
+        .status(HTTP_STATUS.OK)
+        .json({ message: "Pet adopted successfully", pet });
+    } catch (error) {
+      next(error);
+    }
+  };
+  return { newPet, getAllPets, petByID, updatePet, deletePet, adoptPet };
 };
