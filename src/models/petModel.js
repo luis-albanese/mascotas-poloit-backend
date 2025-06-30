@@ -47,11 +47,19 @@ export const petModel = () => {
       const petFound = await prisma.pet.findUnique({
         where: { id: idNumber },
       });
-      const petUpdate = { ...petFound, ...data };
+  
+      if (!petFound) {
+        throw new Error("Mascota no encontrada");
+      }
+  
+      // Evitá pisar el ID
+      const { id: _, ...safeData } = data;
+  
       const pet = await prisma.pet.update({
         where: { id: idNumber },
-        data: petUpdate,
+        data: safeData, // ← ya no incluye el id
       });
+  
       return pet;
     } catch (error) {
       throw new Error(error);
@@ -59,6 +67,7 @@ export const petModel = () => {
       prisma.$disconnect();
     }
   };
+  
   const deletePet = async (id) => {
     try {
       const pet = await prisma.pet.delete({

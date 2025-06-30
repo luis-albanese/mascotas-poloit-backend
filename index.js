@@ -18,7 +18,7 @@ const server = express();
 server.use(
   cors({
     origin: "*",
-    methods: "GET, POST, PUT, DELETE",
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   })
 );
 // Indicamos '/api' como ruta principal

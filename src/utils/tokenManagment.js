@@ -7,7 +7,7 @@ const ACCESS_TOKEN_EXPIRATION = "4m";
 const REFRESH_TOKEN_EXPIRATION = "1d";
 const generateAccessToken = (user) => {
   return jwt.sign(
-    { id: user.id, email: user.email, state: user.state,  name: user.name },
+    { id: user.id, email: user.email, state: user.state,  name: user.name, rol: user.rol  },
     ACCESS_TOKEN_SECRET,
     { expiresIn: ACCESS_TOKEN_EXPIRATION }
   );
