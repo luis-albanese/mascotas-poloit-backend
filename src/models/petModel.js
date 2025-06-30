@@ -27,6 +27,9 @@ export const petModel = () => {
     try {
       const pet = await prisma.pet.findUnique({
         where: { id: parseInt(id) },
+        include: {
+          user: true,
+        },
       });
       return pet;
     } catch (error) {
@@ -39,6 +42,9 @@ export const petModel = () => {
     try {
       const petFound = await prisma.pet.findUnique({
         where: { id: idNumber },
+        include: {
+          user: true,
+        },
       });
 
       if (!petFound) {
@@ -50,8 +56,10 @@ export const petModel = () => {
       const pet = await prisma.pet.update({
         where: { id: idNumber },
         data: safeData,
+        include: {
+          user: true,
+        },
       });
-
       return pet;
     } catch (error) {
       throw new Error(error.message);
