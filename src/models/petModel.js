@@ -71,7 +71,7 @@ export const petModel = () => {
       const pet = await prisma.pet.update({
         where: { id: idNumber },
         data: {
-          status: false,
+          status: "INACTIVE",
           userId: userIdNumber,
         },
         include: {
