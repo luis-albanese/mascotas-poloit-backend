@@ -12,7 +12,11 @@ export const petModel = () => {
 
   const getAllPets = async () => {
     try {
-      const pets = await prisma.pet.findMany();
+      const pets = await prisma.pet.findMany({
+        include: {
+          user: true,
+        },
+      });
       return pets;
     } catch (error) {
       throw new Error(error.message);
